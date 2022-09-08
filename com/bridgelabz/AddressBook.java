@@ -8,10 +8,9 @@ public class AddressBook {
 
     ArrayList<Contacts> list = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
-    private static final String PATH = "C:\\Users\\abhis\\IdeaProjects\\AddressBookSystem\\src\\main\\resources\\";
 
 
-    void addContact() throws IOException {
+    void addContact(){
         System.out.println("Enter the first name");
         String firstName = scanner.next().toLowerCase();
         System.out.println("Enter the last name");
@@ -42,7 +41,7 @@ public class AddressBook {
 
 
     void writeAddressBook(ArrayList<Contacts> arrayList,String addressBookName) throws IOException {
-        System.out.println("Enter\n 1) To write to txt file\n 2) To write to CSV file");
+        System.out.println("Enter\n 1) To write to txt file\n 2) To write to CSV file\n 3) To write to Json File");
         int option = scanner.nextInt();
         switch (option){
             case 1:
@@ -51,19 +50,25 @@ public class AddressBook {
             case 2:
                 FileReaderWriter.writeCSV(arrayList, addressBookName);
                 break;
+            case 3:
+                FileReaderWriter.writeJson(arrayList, addressBookName);
+                break;
         }
 
     }
 
     void readAddressBook(String addressBookName) throws IOException {
-        System.out.println("Select option \n1.read from text file \n2.read from csv file");
+        System.out.println("Enter\n 1) To Read from txt file\n 2) To Read from CSV file\n 3) To Read from Json File");
         int option = scanner.nextInt();
         switch (option) {
             case 1:
                 FileReaderWriter.readTxtFile(new File(FileReaderWriter.PATH.concat(addressBookName+".txt")));
                 break;
             case 2:
-                FileReaderWriter.readCSVFile(new File(FileReaderWriter.PATH.concat( addressBookName +".csv")));
+                FileReaderWriter.readCSVJsonFile(new File(FileReaderWriter.PATH.concat( addressBookName +".csv")));
+                break;
+            case 3:
+                FileReaderWriter.readCSVJsonFile(new File(FileReaderWriter.PATH.concat( addressBookName +".json")));
                 break;
         }
     }
@@ -77,6 +82,7 @@ public class AddressBook {
             String firstName = scanner.next().toLowerCase();
             System.out.println("Enter the last name of person to edit");
             String lastName = scanner.next().toLowerCase();
+
             boolean found = false;
             for (Contacts contact : list) {
                 if (firstName.equals(contact.getFirstName().toLowerCase())) {
@@ -84,24 +90,32 @@ public class AddressBook {
                         System.out.println("Edit the details of person");
                         System.out.print("Enter first name: ");
                         contact.setFirstName(scanner.next());
+
                         System.out.print("Enter last Name: ");
                         contact.setLastName(scanner.next());
+
                         System.out.print("Enter Email: ");
                         contact.setEmail(scanner.next());
+
                         System.out.print("Enter address: ");
                         scanner.nextLine();
                         contact.setAddress(scanner.nextLine());
+
                         System.out.print("Enter phone number: ");
                         contact.setPhoneNumber(scanner.next());
+
                         System.out.print("Enter state: ");
                         contact.setState(scanner.next());
+
                         System.out.print("Enter city: ");
                         contact.setCity(scanner.next());
+
                         System.out.print("Enter zip: ");
                         contact.setZip(scanner.next());
                         found = true;
                         break;
                     }
+
                 }
             }
             if (!found) {
@@ -109,14 +123,15 @@ public class AddressBook {
             }
         }
     }
-    void displayContact() throws IOException {
+
+
+    void displayContact(){
         if (list.isEmpty()) {
             System.out.println("No contacts in the addressBook");
             return;
         }
         list.sort(Comparator.comparing(Contacts::getFirstName));
         list.forEach(System.out::println);
-//        readData();
     }
 
 
@@ -160,6 +175,7 @@ public class AddressBook {
                     3) To exit
                     """);
             int option = scanner.nextInt();
+
             switch (option) {
                 case 1:
                     System.out.println("Enter the city name to view");
@@ -172,6 +188,7 @@ public class AddressBook {
                         } else
                             cityDictionary.put(city, contactsCityList);
                     }
+
                     System.out.println("No of contacts in city " + city + " are " + cityDictionary.size());
                     System.out.println("Contacts in city " + city + " are:");
                     cityDictionary.values().forEach(System.out::println);
@@ -187,6 +204,7 @@ public class AddressBook {
                         } else
                             stateDictionary.put(state, contactsStateList);
                     }
+
                     System.out.println("No of contacts in state " + state + " are " + stateDictionary.size());
                     System.out.println("Contacts in state " + state + " are:");
                     System.out.println(stateDictionary.values());
@@ -196,6 +214,7 @@ public class AddressBook {
                     break;
                 default:
                     break;
+
             }
         }
     }
@@ -226,9 +245,11 @@ public class AddressBook {
         list.sort(Comparator.comparing(Contacts::getZip));
         list.forEach(System.out::println);
     }
+
     @Override
     public String toString() {
         return list +
                 "}\n";
     }
+
 }

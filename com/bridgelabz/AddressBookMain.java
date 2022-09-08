@@ -8,8 +8,11 @@ public class AddressBookMain {
     public static ArrayList<String>  addressBooks = new ArrayList<>();
     static String currentAddressBook;
     static String addressBookName;
+
     public static void main(String[] args) {
+
         System.out.println("Welcome to Address Book Program");
+
         boolean exit = false;
         while (!exit) {
             System.out.println("""
@@ -22,7 +25,8 @@ public class AddressBookMain {
                     6) To view contact in current addressBook
                     7) To write addressBook to Files
                     8) To Read addressBook from files
-                    9) To exit""");
+                    9) To print names of all addressBooks
+                    10) To exit""");
 
             int option = scr.nextInt();
             switch (option) {
@@ -32,6 +36,7 @@ public class AddressBookMain {
                     } catch (Exception e) {
                         System.out.println("\nNo AddressBook Found\n");
                     }
+
                     break;
                 case 2:
                     try {
@@ -77,19 +82,24 @@ public class AddressBookMain {
                     } catch (IOException e) {
                         System.out.println("Catch BLock");
                     }
+                    break;
                 case 9:
+                    System.out.println(addressBooks);
+                    break;
+                case 10:
                     exit = true;
                     break;
                 default:
                     break;
             }
         }
-        System.out.println(addressBooks);
     }
+
     static void chooseAddressBook() {
         System.out.println("""
         Press 1 to add AddressBook
         Press 2 to select AddressBook""");
+
         int option = scr.nextInt();
         switch (option) {
             case 1:
